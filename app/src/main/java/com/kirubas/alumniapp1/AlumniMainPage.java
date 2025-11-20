@@ -33,6 +33,17 @@ public class AlumniMainPage extends AppCompatActivity {
             Intent i = new Intent(this, ViewAlumniActivity.class);
             startActivity(i);
         });
+        Button btnOpenAdminUser = findViewById(R.id.btnOpenAdminUser);
+        btnOpenAdminUser.setOnClickListener(v -> {
+            Intent i = new Intent(this, AdminUserActivity.class);
+            startActivity(i);
+        });
+
+        Button btnOpenInstitutions = findViewById(R.id.btnOpenInstitutions);
+        btnOpenInstitutions.setOnClickListener(v -> {
+            Intent i = new Intent(this, AddInstitutionActivity.class);
+            startActivity(i);
+        });
         // No need to bind btnBackupDB or btnShareDB manually if using android:onClick!
     }
 

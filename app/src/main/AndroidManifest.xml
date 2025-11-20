@@ -3,7 +3,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +13,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/alumni_logo"
         android:theme="@style/Theme.AlumniApp1">
+        <activity
+            android:name=".UdfFieldListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditAdminPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddInstitutionActivity"
+            android:exported="false" />
         <activity
             android:name=".ViewAlumniActivity"
             android:exported="false" />
@@ -27,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -37,4 +50,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+
 </manifest>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/spnInstitutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etFieldName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Field Name" />
+
+        <EditText
+            android:id="@+id/etFieldType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Field Type (text/date/number etc)" />
+
+        <Button
+            android:id="@+id/btnAddField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Field"
+            android:layout_marginTop="8dp"/>
+
+        <ListView
+            android:id="@+id/lvFields"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

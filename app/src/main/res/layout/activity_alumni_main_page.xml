@@ -13,7 +13,19 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:padding="16dp">
+        <Button
+            android:id="@+id/btnOpenAdminUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin User Management"
+            android:layout_marginTop="8dp" />
 
+        <Button
+            android:id="@+id/btnOpenInstitutions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Institutions Management"
+            android:layout_marginTop="8dp" />
         <Button
             android:id="@+id/btnAddAlumni"
             android:layout_width="match_parent"
@@ -30,7 +42,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="440dp"
+            android:layout_height="359dp"
             app:srcCompat="@drawable/alumni_logo" />
 
     </LinearLayout>

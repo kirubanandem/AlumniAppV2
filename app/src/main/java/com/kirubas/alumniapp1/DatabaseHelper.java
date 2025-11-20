@@ -13,21 +13,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        // Institution Master Table
+        db.execSQL("CREATE TABLE institution (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT NOT NULL, " +
+                "address TEXT, " +
+                "logo BLOB, " +
+                "authToken TEXT UNIQUE" +
+                ")");
+
+
+        // Institute Admin Table
+        db.execSQL("CREATE TABLE adminUser (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "username TEXT NOT NULL UNIQUE, " +
+                "password TEXT NOT NULL" +
+                ")");
+
+        // Institute & admin mapping - multiple admin for institutes
+        db.execSQL("CREATE TABLE adminInstitution (" +
+                "adminId INTEGER NOT NULL, " +
+                "institutionId INTEGER NOT NULL, " +
+                "PRIMARY KEY(adminId, institutionId), " +
+                "FOREIGN KEY(adminId) REFERENCES adminUser(id) ON DELETE CASCADE, " +
+                "FOREIGN KEY(institutionId) REFERENCES institution(id) ON DELETE CASCADE" +
+                ")");
+
         // Alumni core profile
-        db.execSQL("CREATE TABLE alumni (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "firstName TEXT, lastName TEXT, email TEXT UNIQUE, graduationYear INTEGER," +
-                "department TEXT, phone TEXT, profilePicture BLOB)");
+        db.execSQL("CREATE TABLE alumni (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "firstName TEXT, " +
+                "lastName TEXT, " +
+                "email TEXT UNIQUE, " +
+                "graduationYear INTEGER, " +
+                "department TEXT, " +
+                "phone TEXT, " +
+                "profilePicture BLOB, " +
+                "institutionId INTEGER, " +
+                "FOREIGN KEY(institutionId) REFERENCES institution(id) ON DELETE SET NULL" +
+                ")");
 
         // User-defined fields meta-table
-        db.execSQL("CREATE TABLE userDefinedFields (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "fieldName TEXT UNIQUE, fieldType TEXT)");
+        db.execSQL("CREATE TABLE userDefinedFields (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "fieldName TEXT UNIQUE, " +
+                "fieldType TEXT, " +
+                "institutionId INTEGER, " +
+                "FOREIGN KEY(institutionId) REFERENCES institution(id) ON DELETE CASCADE" +
+                ")");
 
-        // User-defined values
-        db.execSQL("CREATE TABLE userDefinedValues (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "alumniId INTEGER, fieldId INTEGER, value TEXT," +
+// User-defined values
+        db.execSQL("CREATE TABLE userDefinedValues (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "alumniId INTEGER, " +
+                "fieldId INTEGER, " +
+                "institutionId INTEGER, " +
+                "value TEXT, " +
                 "FOREIGN KEY(alumniId) REFERENCES alumni(id) ON DELETE CASCADE, " +
                 "FOREIGN KEY(fieldId) REFERENCES userDefinedFields(id) ON DELETE CASCADE, " +
-                "UNIQUE(alumniId, fieldId))");
+                "FOREIGN KEY(institutionId) REFERENCES institution(id) ON DELETE CASCADE, " +
+                "UNIQUE(alumniId, fieldId, institutionId))");
+
     }
 
     @Override
@@ -35,6 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS userDefinedValues");
         db.execSQL("DROP TABLE IF EXISTS userDefinedFields");
         db.execSQL("DROP TABLE IF EXISTS alumni");
+        db.execSQL("DROP TABLE IF EXISTS adminUser");
+        db.execSQL("DROP TABLE IF EXISTS institution");
+        db.execSQL("DROP TABLE IF EXISTS adminInstitution");
         onCreate(db);
     }
+
+
 }

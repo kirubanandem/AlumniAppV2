@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
@@ -39,6 +40,17 @@
             android:layout_height="50dp"
             android:hint="Graduation Year"
             android:inputType="number"/>
+        <Spinner
+            android:id="@+id/spnInstitute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+        <LinearLayout
+            android:id="@+id/layoutUdfFields"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
 
         <ImageView android:id="@+id/profilePic"
             android:layout_width="150dp"
