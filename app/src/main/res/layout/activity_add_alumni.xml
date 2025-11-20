@@ -1,0 +1,62 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:fitsSystemWindows="true">
+
+        <EditText
+            android:id="@+id/firstName"
+            android:layout_width="374dp"
+            android:layout_height="50dp"
+            android:hint="First Name" />
+
+        <EditText android:id="@+id/lastName"
+            android:layout_width="374dp"
+            android:layout_height="50dp"
+            android:hint="Last Name"/>
+
+        <EditText android:id="@+id/email"
+            android:layout_width="374dp"
+            android:layout_height="50dp"
+            android:hint="Unique Email"/>
+
+        <EditText android:id="@+id/phone"
+            android:layout_width="374dp"
+            android:layout_height="50dp"
+            android:hint="Phone"/>
+
+        <EditText android:id="@+id/department"
+            android:layout_width="374dp"
+            android:layout_height="50dp"
+            android:hint="Course/Department"/>
+
+        <EditText android:id="@+id/gradYear"
+            android:layout_width="374dp"
+            android:layout_height="50dp"
+            android:hint="Graduation Year"
+            android:inputType="number"/>
+
+        <ImageView android:id="@+id/profilePic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+        <Button
+            android:id="@+id/btnTakePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Take Photo"/>
+
+        <Button android:id="@+id/btnSelectImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Profile Picture"/>
+
+        <Button android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"/>
+    </LinearLayout>
+</ScrollView>
