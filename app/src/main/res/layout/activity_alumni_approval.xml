@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pending Alumni Join Requests"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="12dp" />
+
+    <ListView
+        android:id="@+id/lvRequests"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:dividerHeight="1dp" />
+
+    <ImageView
+        android:id="@+id/ivProfilePic"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_default_profile"
+        android:contentDescription="Profile Picture" />
+
+    <TextView android:id="@+id/tvName" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/tvEmail" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/tvPhone" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/tvGender" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/tvDOB" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/tvInstitution" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold" android:layout_marginTop="16dp"/>
+    <TextView android:id="@+id/tvDept" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/tvYears" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/tvGradYear" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnApprove"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Approve" />
+
+        <Button
+            android:id="@+id/btnReject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Reject"
+            android:layout_marginHorizontal="16dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnPending"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Pending"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

@@ -2,8 +2,6 @@ package com.kirubas.alumniapp1;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.view.View;
-import android.widget.AdapterView;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.*;
@@ -17,11 +15,15 @@ public class UdfFieldListActivity extends AppCompatActivity {
     EditText etFieldName, etFieldType;
     Button btnAddField;
     ListView lvFields;
+
     ArrayList<String> instituteNames = new ArrayList<>();
     ArrayList<Integer> instituteIds = new ArrayList<>();
     ArrayList<String> fieldDisplay = new ArrayList<>();
     ArrayList<Integer> fieldIds = new ArrayList<>();
     int selectedInstituteId = -1;
+
+    String userType;  // "admin" or "iaam"
+    int userId = -1;  // adminId or institutionId depending on userType
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +36,24 @@ public class UdfFieldListActivity extends AppCompatActivity {
         btnAddField = findViewById(R.id.btnAddField);
         lvFields = findViewById(R.id.lvFields);
 
+        userType = getIntent().getStringExtra("user_type");
+        userId = getIntent().getIntExtra("user_id", -1);
+        if (userType == null) userType = "";
+        if (userId == -1) {
+            Toast.makeText(this, "Invalid user info", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         loadInstitutes();
 
         spnInstitutes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            public void onItemSelected(AdapterView<?> parent, android.view.View view, int pos, long id) {
                 selectedInstituteId = instituteIds.get(pos);
                 loadFields();
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         btnAddField.setOnClickListener(v -> {
@@ -57,6 +67,9 @@ public class UdfFieldListActivity extends AppCompatActivity {
                 Toast.makeText(this, "Both field name and type required", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            // TODO: Optional - add permission validation depending on userType and institution
+
             ContentValues cv = new ContentValues();
             cv.put("fieldName", fieldName);
             cv.put("fieldType", fieldType);
@@ -98,37 +111,65 @@ public class UdfFieldListActivity extends AppCompatActivity {
     private void loadInstitutes() {
         instituteNames.clear();
         instituteIds.clear();
+
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.query("institution", null, null, null, null, null, "name ASC");
-        while (c.moveToNext()) {
-            instituteNames.add(c.getString(c.getColumnIndexOrThrow("name")));
-            instituteIds.add(c.getInt(c.getColumnIndexOrThrow("id")));
+
+        Cursor cursor;
+        if ("admin".equals(userType)) {
+            // Load institutions linked to admin via adminInstitution mapping
+            String query = "SELECT institution.id, institution.name FROM institution " +
+                    "INNER JOIN adminInstitution ON institution.id = adminInstitution.institutionId " +
+                    "WHERE adminInstitution.adminId = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        } else if ("iaam".equals(userType)) {
+            // IAAM user manages exactly one institution = userId
+            cursor = db.query("institution", null, "id=?",
+                    new String[]{String.valueOf(userId)}, null, null, null);
+        } else {
+            cursor = db.query("institution", new String[]{"id", "name"}, null, null, null, null, "name ASC");
         }
-        c.close();
+
+        while (cursor.moveToNext()) {
+            instituteIds.add(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+            instituteNames.add(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+        }
+        cursor.close();
         db.close();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, instituteNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnInstitutes.setAdapter(adapter);
-        if (!instituteIds.isEmpty()) selectedInstituteId = instituteIds.get(0);
-        else selectedInstituteId = -1;
+
+        if (!instituteIds.isEmpty()) {
+            selectedInstituteId = instituteIds.get(0);
+            spnInstitutes.setSelection(0);
+        } else {
+            selectedInstituteId = -1;
+        }
     }
 
     private void loadFields() {
         fieldDisplay.clear();
         fieldIds.clear();
+
+        if (selectedInstituteId == -1) {
+            lvFields.setAdapter(null);
+            return;
+        }
+
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
         Cursor c = db.query("userDefinedFields", null, "institutionId=?", new String[]{String.valueOf(selectedInstituteId)}, null, null, "fieldName ASC");
         while (c.moveToNext()) {
-            fieldDisplay.add(
-                    c.getString(c.getColumnIndexOrThrow("fieldName")) + " (" +
-                            c.getString(c.getColumnIndexOrThrow("fieldType")) + ")"
-            );
+            String disp = c.getString(c.getColumnIndexOrThrow("fieldName")) + " (" + c.getString(c.getColumnIndexOrThrow("fieldType")) + ")";
+            fieldDisplay.add(disp);
             fieldIds.add(c.getInt(c.getColumnIndexOrThrow("id")));
         }
         c.close();
         db.close();
+
         lvFields.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fieldDisplay));
     }
 }

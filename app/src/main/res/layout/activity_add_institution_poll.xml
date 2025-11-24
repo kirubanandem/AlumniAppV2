@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Poll Question" />
+
+    <EditText
+        android:id="@+id/etOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add Option"
+        android:layout_marginTop="12dp"/>
+
+    <Button
+        android:id="@+id/btnAddOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Option"
+        android:layout_marginTop="8dp"/>
+
+    <ListView
+        android:id="@+id/lvOptions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"/>
+
+    <Button
+        android:id="@+id/btnSavePoll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Poll"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

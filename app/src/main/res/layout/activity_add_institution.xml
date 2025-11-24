@@ -23,11 +23,24 @@
             android:hint="Address" />
 
         <EditText
-            android:id="@+id/etInstitutionToken"
+            android:id="@+id/etInstitutionEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Auth Token (for alumni login)"
-            android:inputType="text"/>
+            android:hint="Email"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/etAccountManagerUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Account Manager Username" />
+
+        <EditText
+            android:id="@+id/etAccountManagerPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Account Manager Password"
+            android:inputType="textPassword" />
 
         <ImageView
             android:id="@+id/ivInstitutionLogo"

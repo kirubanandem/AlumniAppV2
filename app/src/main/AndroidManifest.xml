@@ -14,6 +14,64 @@
         android:roundIcon="@mipmap/alumni_logo"
         android:theme="@style/Theme.AlumniApp1">
         <activity
+            android:name=".InstitutionLandingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PollManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ControlPanelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DatabaseRestoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PollResultsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlumniPollsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventParticipationReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventParticipationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddInstitutionPollActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddInstitutionEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InstitutionEventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlumniApprovalActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AlumniApp1" />
+        <activity
+            android:name=".AlumniInstitutionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlumniInstitutionRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlumniLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InstitutionAdminAssignmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlumniAccountManagerLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".UdfFieldListActivity"
             android:exported="false" />
         <activity
@@ -36,13 +94,14 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -14,7 +14,7 @@
             android:id="@+id/etAdminUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Admin Username" />
+            android:hint="Admin Username (for login)" />
 
         <EditText
             android:id="@+id/etAdminPassword"
@@ -23,12 +23,36 @@
             android:hint="Password"
             android:inputType="textPassword"/>
 
+        <EditText
+            android:id="@+id/etAdminName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name (Profile Name)" />
+
+
+
+        <ImageView
+            android:id="@+id/ivAdminProfile"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_default_profile"
+            android:layout_gravity="center"
+            android:contentDescription="Profile Photo"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnSelectProfilePic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose Profile Picture"
+            android:layout_marginTop="8dp" />
+
         <Button
             android:id="@+id/btnSaveAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Admin"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:text="Register as Admin" />
 
         <TextView
             android:id="@+id/tvAdminListLabel"
@@ -45,6 +69,5 @@
             android:layout_height="300dp"
             android:layout_marginTop="8dp"
             android:dividerHeight="1dp"/>
-
     </LinearLayout>
 </ScrollView>

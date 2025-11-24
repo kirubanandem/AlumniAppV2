@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnManageAdminAssignments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Institution Admin Assignments" />
+
+    <Button
+        android:id="@+id/btnManageAlumniApproval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Approve Alumni Requests"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btnManageAlumniUDFFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Alumni Custom Fields"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btnManagePolls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Polls"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btnManageEvents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Events"
+        android:layout_marginTop="12dp" />
+
+</LinearLayout>

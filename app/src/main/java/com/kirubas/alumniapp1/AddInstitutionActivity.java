@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class AddInstitutionActivity extends AppCompatActivity {
 
-    EditText etName, etAddress, etAuthToken;
+    EditText etName, etAddress, etEmail, etAccountManagerUser, etAccountManagerPass;
     ImageView ivLogo;
     Button btnSave, btnSelectLogo;
     ListView lvInstitutions;
@@ -45,7 +45,9 @@ public class AddInstitutionActivity extends AppCompatActivity {
 
         etName = findViewById(R.id.etInstitutionName);
         etAddress = findViewById(R.id.etInstitutionAddress);
-        etAuthToken = findViewById(R.id.etInstitutionToken);
+        etEmail = findViewById(R.id.etInstitutionEmail);
+        etAccountManagerUser = findViewById(R.id.etAccountManagerUser);
+        etAccountManagerPass = findViewById(R.id.etAccountManagerPass);
         ivLogo = findViewById(R.id.ivInstitutionLogo);
         btnSave = findViewById(R.id.btnSaveInstitution);
         btnSelectLogo = findViewById(R.id.btnSelectLogo);
@@ -77,37 +79,39 @@ public class AddInstitutionActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> {
             String name = etName.getText().toString().trim();
             String address = etAddress.getText().toString().trim();
-            String token = etAuthToken.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String mgrUser = etAccountManagerUser.getText().toString().trim();
+            String mgrPass = etAccountManagerPass.getText().toString().trim();
 
-            if (name.isEmpty() || token.isEmpty()) {
-                Toast.makeText(this, "Institution name and auth token required!", Toast.LENGTH_SHORT).show();
+            if (name.isEmpty() || mgrUser.isEmpty() || mgrPass.isEmpty()) {
+                Toast.makeText(this, "Name, manager username, and password required!", Toast.LENGTH_SHORT).show();
                 return;
             }
             ContentValues values = new ContentValues();
             values.put("name", name);
             values.put("address", address);
+            values.put("email", email);
             values.put("logo", logoBytes);
-            values.put("authToken", token);
+            values.put("accountManagerUsername", mgrUser);
+            values.put("accountManagerPassword", mgrPass);
 
             DatabaseHelper dbHelper = new DatabaseHelper(this);
             try {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 long id;
                 if (editingInstitutionId != -1) {
-                    // Update existing institution
                     id = db.update("institution", values, "id=?", new String[]{String.valueOf(editingInstitutionId)});
                     editingInstitutionId = -1;
                 } else {
-                    // Insert new
                     id = db.insert("institution", null, values);
                 }
                 db.close();
 
                 if (id == -1) {
-                    Toast.makeText(this, "Failed to save institution", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Failed to save institution. Username/email may be duplicate.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Institution saved", Toast.LENGTH_SHORT).show();
-                    etName.setText(""); etAddress.setText(""); etAuthToken.setText(""); ivLogo.setImageResource(R.drawable.ic_default_profile); logoBytes = null;
+                    clearFields();
                     loadInstitutionsList();
                 }
             } catch (Exception e) {
@@ -115,12 +119,13 @@ public class AddInstitutionActivity extends AppCompatActivity {
             }
         });
 
-        lvInstitutions.setOnItemClickListener((parent, view, position, id) -> {
-            int instId = instIds.get(position);
-            Intent i = new Intent(AddInstitutionActivity.this, AddAlumniActivity.class);
-            i.putExtra("default_institution_id", instId);
-            startActivity(i);
-        });
+        //while clicking on the listview institute name opening new user activity removed.
+        //lvInstitutions.setOnItemClickListener((parent, view, position, id) -> {
+            //int instId = instIds.get(position);
+            //Intent i = new Intent(AddInstitutionActivity.this, AddAlumniActivity.class);
+            //i.putExtra("default_institution_id", instId);
+            //startActivity(i);
+        //});
 
         lvInstitutions.setOnItemLongClickListener((parent, view, position, id) -> {
             int instId = instIds.get(position);
@@ -137,6 +142,16 @@ public class AddInstitutionActivity extends AppCompatActivity {
         loadInstitutionsList();
     }
 
+    private void clearFields() {
+        etName.setText("");
+        etAddress.setText("");
+        etEmail.setText("");
+        etAccountManagerUser.setText("");
+        etAccountManagerPass.setText("");
+        ivLogo.setImageResource(R.drawable.ic_default_profile);
+        logoBytes = null;
+    }
+
     private void loadInstitutionsList() {
         instNames.clear();
         instIds.clear();
@@ -144,7 +159,9 @@ public class AddInstitutionActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.query("institution", null, null, null, null, null, "name ASC");
         while (c.moveToNext()) {
-            instNames.add(c.getString(c.getColumnIndexOrThrow("name")));
+            String display = c.getString(c.getColumnIndexOrThrow("name"))
+                    + " (" + c.getString(c.getColumnIndexOrThrow("email")) + ")";
+            instNames.add(display);
             instIds.add(c.getInt(c.getColumnIndexOrThrow("id")));
         }
         c.close();
@@ -161,7 +178,9 @@ public class AddInstitutionActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             etName.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
             etAddress.setText(cursor.getString(cursor.getColumnIndexOrThrow("address")));
-            etAuthToken.setText(cursor.getString(cursor.getColumnIndexOrThrow("authToken")));
+            etEmail.setText(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+            etAccountManagerUser.setText(cursor.getString(cursor.getColumnIndexOrThrow("accountManagerUsername")));
+            etAccountManagerPass.setText(cursor.getString(cursor.getColumnIndexOrThrow("accountManagerPassword")));
             byte[] img = cursor.getBlob(cursor.getColumnIndexOrThrow("logo"));
             if (img != null && img.length > 0) {
                 Bitmap bmp = BitmapFactory.decodeByteArray(img, 0, img.length);

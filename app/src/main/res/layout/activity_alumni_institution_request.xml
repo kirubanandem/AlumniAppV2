@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Institution to Join"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="12dp" />
+
+    <ListView
+        android:id="@+id/lvInstitutions"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:choiceMode="singleChoice" />
+
+    <EditText
+        android:id="@+id/etDepartment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course/Department"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/etFromYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="From Year (Start)"
+        android:inputType="number"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/etToYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="To Year (End)"
+        android:inputType="number"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/etGradYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Graduation Year"
+        android:inputType="number"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnRequestJoin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Join Request"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
